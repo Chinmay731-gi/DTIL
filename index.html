@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KisanMandi – Farm to Table</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Tiro+Devanagari+Hindi&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════ */
+:root {
+  --saffron: #E8650A;
+  --saffron-light: #FF7A1A;
+  --saffron-dark: #C4520A;
+  --turmeric: #F5A623;
+  --earth: #2C1A0E;
+  --earth-mid: #5C3D26;
+  --cream: #FDF6ED;
+  --cream-dark: #F5EAD8;
+  --green: #1D5C3A;
+  --leaf: #3A9B6F;
+  --leaf-light: #52C48E;
+  --white: #FFFFFF;
+  --muted: #9A7B5E;
+  --border: rgba(44,26,14,0.1);
+  --shadow-sm: 0 2px 8px rgba(44,26,14,0.08);
+  --shadow-md: 0 6px 24px rgba(44,26,14,0.12);
+  --shadow-lg: 0 16px 48px rgba(44,26,14,0.16);
+  --r: 16px;
+  --r-sm: 10px;
+  --r-full: 100px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--earth);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+img{max-width:100%;}
+button,input,select,textarea{font-family:inherit;}
+a{text-decoration:none;color:inherit;}
+
+/* ═══════════════════════════════════════════
+   PAGE SYSTEM — only one .page visible at a time
+═══════════════════════════════════════════ */
+.page{display:none;min-height:100vh;animation:fadeIn .35s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══════════════════════════════════════════
+   SHARED NAV
+═══════════════════════════════════════════ */
+.nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(253,246,237,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  height:62px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.logo-orb{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--saffron);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.logo-name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;}
+.logo-name span{color:var(--saffron);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-btn{
+  padding:8px 18px;border-radius:var(--r-full);
+  border:1.5px solid var(--border);
+  font-size:.85rem;font-weight:600;cursor:pointer;
+  background:transparent;color:var(--earth);
+  transition:all .2s;
+}
+.nav-btn:hover{border-color:var(--saffron);color:var(--saffron);}
+.nav-btn.primary{background:var(--saffron);color:#fff;border-color:var(--saffron);}
+.nav-btn.primary:hover{background:var(--saffron-dark);}
+.nav-pill{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px 6px 6px;
+  border-radius:var(--r-full);
+  background:rgba(232,101,10,.08);
+  font-size:.8rem;font-weight:600;color:var(--saffron);
+  border:1px solid rgba(232,101,10,.2);
+}
+.nav-avatar{
+  width:26px;height:26px;border-radius:50%;
+  background:var(--saffron);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:#fff;font-weight:700;
+}
+.cart-badge{
+  position:relative;cursor:pointer;
+  width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;border:1.5px solid var(--border);
+  font-size:1.1rem;transition:all .2s;
+  background:white;
+}
+.cart-badge:hover{border-color:var(--saffron);}
+.cart-count{
+  position:absolute;top:-4px;right:-4px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--saffron);color:#fff;
+  font-size:.6rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--cream);
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY UTILS
+═══════════════════════════════════════════ */
+.section-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.7rem;font-weight:700;letter-spacing:1.8px;
+  text-transform:uppercase;color:var(--saffron);margin-bottom:12px;
+}
+.section-eyebrow::before{content:'';width:20px;height:2px;background:var(--saffron);}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.7rem,3vw,2.5rem);
+  font-weight:700;line-height:1.15;margin-bottom:12px;
+}
+.section-sub{color:var(--muted);font-size:.95rem;line-height:1.7;max-width:460px;}
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:var(--r-full);
+  border:none;cursor:pointer;font-size:.9rem;font-weight:600;
+  transition:all .22s cubic-bezier(.34,1.56,.64,1);
+}
+.btn-primary{background:var(--saffron);color:#fff;}
+.btn-primary:hover{background:var(--saffron-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,101,10,.3);}
+.btn-secondary{background:transparent;color:var(--earth);border:1.5px solid var(--border);}
+.btn-secondary:hover{border-color:var(--earth);transform:translateY(-2px);}
+.btn-green{background:var(--green);color:#fff;}
+.btn-green:hover{background:#164a2e;transform:translateY(-2px);}
+.btn-sm{padding:8px 16px;font-size:.8rem;}
+.btn-full{width:100%;justify-content:center;}
+
+/* ═══════════════════════════════════════════
+   FORM ELEMENTS
+═══════════════════════════════════════════ */
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:.8rem;font-weight:600;margin-bottom:6px;color:var(--earth-mid);}
+.form-input,.form-select,.form-textarea{
+  width:100%;padding:11px 16px;
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-size:.9rem;color:var(--earth);background:white;
+  transition:border-color .2s;outline:none;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(232,101,10,.08);}
+.form-textarea{resize:vertical;min-height:90px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* ═══════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════ */
+.card{
+  background:white;border-radius:var(--r);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-sm);
+  overflow:hidden;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:28px;right:28px;z-index:9999;
+  background:var(--earth);color:#fff;
+  padding:14px 22px;border-radius:var(--r);
+  font-size:.88rem;font-weight:500;
+  box-shadow:var(--shadow-lg);
+  display:none;align-items:center;gap:10px;
+  animation:slideUp .3s ease;
+  max-width:320px;
+}
+.toast.show{display:flex;}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══════════════════════════════════════════
+   MODAL OVERLAY
+═══════════════════════════════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(44,26,14,.5);
+  backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.show{display:flex;}
+.modal{
+  background:white;border-radius:24px;
+  padding:36px;width:100%;max-width:420px;
+  box-shadow:var(--shadow-lg);
+  animation:fadeIn .3s ease;
+  position:relative;
+}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  border:none;background:var(--cream-dark);cursor:pointer;
+  font-size:1rem;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.modal-close:hover{background:var(--border);transform:rotate(90deg);}
+
+/* ═══════════════════════════════════════════
+   ▌ PAGE 1: HOME / LANDING
+═══════════════════════════════════════════ */
+.hero{
+  min-height:calc(100vh - 62px);
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:60px 5%;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 70% 30%,rgba(232,101,10,.07) 0%,transparent 55%),
+    radial-gradient(circle at 20% 70%,rgba(58,155,111,.07) 0%,transparent 50%);
+  pointer-events:none;
+}
+.hero-pattern{
+  position:absolute;right:-80px;top:50%;
+  transform:translateY(-50%);
+  width:480px;height:480px;border-radius:50%;
+  border:2px dashed rgba(232,101,10,.15);
+  animation:spin 50s linear infinite;
+}
+.hero-pattern::after{
+  content:'';position:absolute;inset:40px;border-radius:50%;
+  border:1px solid rgba(232,101,10,.08);
+}
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg);}}
+.hero-left{position:relative;z-index:2;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(58,155,111,.1);border:1px solid rgba(58,155,111,.25);
+  padding:6px 14px;border-radius:var(--r-full);
+  font-size:.72rem;font-weight:700;color:var(--green);
+  letter-spacing:.8px;text-transform:uppercase;margin-bottom:24px;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,4vw,3.6rem);
+  font-weight:900;line-height:1.1;margin-bottom:14px;letter-spacing:-.5px;
+}
+.hero-title .hl{
+  color:var(--saffron);position:relative;display:inline-block;
+}
+.hero-title .hl::after{
+  content:'';position:absolute;bottom:2px;left:0;right:0;
+  height:4px;background:var(--turmeric);border-radius:2px;opacity:.5;
+}
+.hero-hindi{
+  font-family:'Tiro Devanagari Hindi',serif;
+  font-size:.98rem;color:var(--muted);margin-bottom:16px;
+}
+.hero-desc{font-size:.98rem;color:var(--muted);line-height:1.7;max-width:420px;margin-bottom:32px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.hero-stats{
+  display:flex;gap:28px;margin-top:40px;
+  padding-top:28px;border-top:1px solid var(--border);
+}
+.stat-n{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;line-height:1;}
+.stat-l{font-size:.7rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.6px;}
+
+/* Login choice cards */
+.login-choices{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  margin-top:32px;
+}
+.choice-card{
+  background:white;border:1.5px solid var(--border);
+  border-radius:20px;padding:28px 22px;
+  cursor:pointer;transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  text-align:center;
+}
+.choice-card:hover{border-color:var(--saffron);transform:translateY(-4px);box-shadow:0 12px 32px rgba(232,101,10,.12);}
+.choice-card.farmer-card:hover{border-color:var(--green);box-shadow:0 12px 32px rgba(58,155,111,.12);}
+.choice-icon{font-size:2.6rem;margin-bottom:14px;display:block;}
+.choice-title{font-weight:700;font-size:1rem;margin-bottom:6px;}
+.choice-sub{font-size:.78rem;color:var(--muted);line-height:1.5;}
+
+/* trust strip */
+.trust-strip{
+  background:var(--earth);color:rgba(255,255,255,.8);
+  padding:16px 5%;
+  display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;
+}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:.8rem;}
+.t-dot{width:3px;height:3px;border-radius:50%;background:var(--turmeric);}
+
+/* ═══════════════════════════════════════════
+   ▌ PAGE 2: AUTH (LOGIN / REGISTER)
+═══════════════════════════════════════════ */
+.auth-wrap{
+  min-height:calc(100vh - 62px);
+  display:flex;align-items:center;justify-content:center;
+  padding:40px 5%;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(232,101,10,.06) 0%,transparent 50%),
+    radial-gradient(circle at 15% 80%,rgba(58,155,111,.06) 0%,transparent 50%);
+}
+.auth-box{
+  background:white;border-radius:28px;
+  padding:44px 40px;width:100%;max-width:460px;
+  box-shadow:var(--shadow-lg);border:1px solid var(--border);
+}
+.auth-role-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:var(--r-full);
+  font-size:.72rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.auth-role-badge.farmer{background:rgba(58,155,111,.1);color:var(--green);border:1px solid rgba(58,155,111,.2);}
+.auth-role-badge.customer{background:rgba(232,101,10,.1);color:var(--saffron);border:1px solid rgba(232,101,10,.2);}
+.auth-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:6px;}
+.auth-sub{font-size:.85rem;color:var(--muted);margin-bottom:28px;}
+.auth-tabs{
+  display:flex;background:var(--cream-dark);
+  border-radius:var(--r-sm);padding:4px;gap:4px;margin-bottom:24px;
+}
+.auth-tab{
+  flex:1;padding:9px;border-radius:8px;
+  font-size:.84rem;font-weight:600;cursor:pointer;
+  background:transparent;border:none;color:var(--muted);
+  transition:all .2s;
+}
+.auth-tab.active{background:white;color:var(--earth);box-shadow:var(--shadow-sm);}
+.divider{
+  display:flex;align-items:center;gap:12px;margin:18px 0;
+  font-size:.75rem;color:var(--muted);
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.social-auth{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;
+}
+.social-btn-auth{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px;border-radius:var(--r-sm);
+  border:1.5px solid var(--border);background:white;
+  font-size:.82rem;font-weight:500;cursor:pointer;
+  transition:all .2s;
+}
+.social-btn-auth:hover{border-color:var(--saffron);background:rgba(232,101,10,.03);}
+.switch-link{
+  text-align:center;font-size:.82rem;color:var(--muted);margin-top:20px;
+}
+.switch-link a{color:var(--saffron);font-weight:600;cursor:pointer;}
+
+/* ═══════════════════════════════════════════
+   ▌ PAGE 3A: FARMER DASHBOARD
+═══════════════════════════════════════════ */
+.dashboard-layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 62px);}
+.sidebar{
+  background:var(--earth);padding:28px 0;
+  position:sticky;top:62px;height:calc(100vh - 62px);
+  overflow-y:auto;
+}
+.sidebar-user{
+  padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.08);
+  margin-bottom:20px;
+}
+.sidebar-avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--saffron),var(--turmeric));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:12px;
+}
+.sidebar-name{font-weight:700;font-size:.95rem;color:white;}
+.sidebar-role{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:2px;}
+.sidebar-verified{
+  display:flex;align-items:center;gap:5px;
+  font-size:.7rem;color:var(--leaf-light);margin-top:6px;font-weight:600;
+}
+.sidebar-nav{padding:0 12px;}
+.sidebar-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 12px;border-radius:12px;
+  font-size:.85rem;font-weight:500;color:rgba(255,255,255,.6);
+  cursor:pointer;transition:all .18s;margin-bottom:2px;
+}
+.sidebar-item:hover{color:white;background:rgba(255,255,255,.07);}
+.sidebar-item.active{color:white;background:rgba(232,101,10,.2);color:var(--turmeric);}
+.sidebar-item .si{font-size:1rem;width:20px;text-align:center;}
+.sidebar-section{
+  font-size:.63rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.25);padding:16px 24px 6px;
+}
+.dash-main{padding:32px;background:var(--cream);overflow-y:auto;}
+.dash-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:28px;flex-wrap:wrap;gap:16px;
+}
+.dash-greeting{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;}
+.dash-date{font-size:.82rem;color:var(--muted);margin-top:4px;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.stat-card{
+  background:white;border-radius:var(--r);border:1px solid var(--border);
+  padding:20px;box-shadow:var(--shadow-sm);
+}
+.stat-card-icon{font-size:1.6rem;margin-bottom:10px;}
+.stat-card-n{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1;}
+.stat-card-l{font-size:.73rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.6px;}
+.stat-card-change{font-size:.72rem;margin-top:8px;font-weight:600;}
+.stat-card-change.up{color:var(--leaf);}
+.stat-card-change.dn{color:#E55;}
+
+/* Upload crop section */
+.section-card{
+  background:white;border-radius:var(--r);border:1px solid var(--border);
+  padding:24px;box-shadow:var(--shadow-sm);margin-bottom:20px;
+}
+.section-card-title{
+  font-weight:700;font-size:1rem;margin-bottom:18px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-card-title .icon{font-size:1.1rem;}
+.crop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+.crop-listing{
+  background:var(--cream);border-radius:var(--r-sm);border:1px solid var(--border);
+  overflow:hidden;transition:all .2s;
+}
+.crop-listing:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+.crop-img{
+  height:110px;display:flex;align-items:center;justify-content:center;
+  font-size:3.2rem;
+}
+.crop-img.c1{background:linear-gradient(135deg,#fff5ec,#ffe8d6);}
+.crop-img.c2{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);}
+.crop-img.c3{background:linear-gradient(135deg,#fffde7,#fff9c4);}
+.crop-img.c4{background:linear-gradient(135deg,#e3f2fd,#bbdefb);}
+.crop-img.c5{background:linear-gradient(135deg,#fce4ec,#f8bbd0);}
+.crop-img.c6{background:linear-gradient(135deg,#f3e5f5,#e1bee7);}
+.crop-body{padding:14px;}
+.crop-name{font-weight:700;font-size:.92rem;}
+.crop-price{color:var(--saffron);font-weight:700;font-size:.88rem;margin-top:3px;}
+.crop-stock{font-size:.72rem;color:var(--muted);margin-top:2px;}
+.crop-actions{display:flex;gap:6px;margin-top:10px;}
+.crop-action-btn{
+  flex:1;padding:6px;border-radius:8px;border:1.5px solid var(--border);
+  font-size:.72rem;font-weight:600;cursor:pointer;background:transparent;
+  transition:all .18s;
+}
+.crop-action-btn:hover{border-color:var(--saffron);color:var(--saffron);}
+.crop-action-btn.danger:hover{border-color:#e55;color:#e55;}
+
+/* Upload form */
+.upload-zone{
+  border:2px dashed var(--border);border-radius:var(--r);
+  padding:36px;text-align:center;cursor:pointer;
+  transition:all .2s;margin-bottom:18px;
+}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--saffron);background:rgba(232,101,10,.03);}
+.upload-zone .uz-icon{font-size:2.4rem;margin-bottom:12px;}
+.upload-zone .uz-text{font-size:.88rem;color:var(--muted);line-height:1.6;}
+.upload-zone .uz-text strong{color:var(--saffron);cursor:pointer;}
+
+/* Orders table */
+.orders-table{width:100%;border-collapse:collapse;}
+.orders-table th{
+  font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
+  color:var(--muted);padding:10px 14px;text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.orders-table td{
+  padding:12px 14px;font-size:.84rem;
+  border-bottom:1px solid rgba(0,0,0,.04);
+}
+.orders-table tr:hover td{background:var(--cream);}
+.status-badge{
+  display:inline-block;padding:3px 10px;border-radius:var(--r-full);
+  font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+}
+.status-badge.delivered{background:rgba(58,155,111,.1);color:var(--green);}
+.status-badge.pending{background:rgba(245,166,35,.15);color:#a07010;}
+.status-badge.processing{background:rgba(232,101,10,.1);color:var(--saffron);}
+
+/* ═══════════════════════════════════════════
+   ▌ PAGE 3B: CUSTOMER MARKETPLACE
+═══════════════════════════════════════════ */
+.market-hero{
+  background:linear-gradient(135deg,var(--earth) 0%,#4a2c14 100%);
+  padding:52px 5%;color:white;position:relative;overflow:hidden;
+}
+.market-hero::after{
+  content:'🌾';position:absolute;right:4%;top:50%;
+  transform:translateY(-50%);font-size:8rem;opacity:.07;pointer-events:none;
+}
+.market-hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;margin-bottom:8px;
+}
+.market-hero-sub{font-size:.92rem;opacity:.7;margin-bottom:24px;}
+.search-bar{
+  display:flex;align-items:center;gap:10px;
+  background:white;border-radius:var(--r-full);
+  padding:6px 6px 6px 20px;max-width:560px;
+}
+.search-bar input{
+  flex:1;border:none;outline:none;font-size:.9rem;
+  color:var(--earth);background:transparent;
+}
+.search-bar input::placeholder{color:var(--muted);}
+.market-body{padding:36px 5%;}
+.market-layout{display:grid;grid-template-columns:220px 1fr;gap:28px;}
+.filter-panel{position:sticky;top:78px;height:fit-content;}
+.filter-card{
+  background:white;border-radius:var(--r);border:1px solid var(--border);
+  padding:20px;box-shadow:var(--shadow-sm);
+}
+.filter-title{font-weight:700;font-size:.88rem;margin-bottom:14px;}
+.filter-group{margin-bottom:18px;}
+.filter-group-label{
+  font-size:.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:var(--muted);margin-bottom:10px;
+}
+.filter-option{
+  display:flex;align-items:center;gap:8px;
+  padding:5px 0;cursor:pointer;font-size:.84rem;
+}
+.filter-option input[type=checkbox]{
+  accent-color:var(--saffron);width:15px;height:15px;cursor:pointer;
+}
+.range-row{display:flex;gap:8px;align-items:center;font-size:.78rem;color:var(--muted);}
+.range-row input{flex:1;accent-color:var(--saffron);}
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;}
+.market-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.result-count{font-size:.85rem;color:var(--muted);}
+.sort-select{
+  padding:8px 14px;border-radius:var(--r-full);
+  border:1.5px solid var(--border);
+  font-size:.82rem;font-family:inherit;cursor:pointer;outline:none;
+}
+.sort-select:focus{border-color:var(--saffron);}
+.product-card{
+  background:white;border-radius:var(--r);border:1px solid var(--border);
+  overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+.product-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);}
+.product-img{
+  height:150px;display:flex;align-items:center;justify-content:center;
+  font-size:4rem;position:relative;
+}
+.product-badge{
+  position:absolute;top:10px;left:10px;
+  background:var(--green);color:white;
+  font-size:.62rem;font-weight:700;padding:3px 9px;
+  border-radius:var(--r-full);text-transform:uppercase;letter-spacing:.4px;
+}
+.wishlist-btn{
+  position:absolute;top:10px;right:10px;
+  width:32px;height:32px;border-radius:50%;
+  background:white;border:none;cursor:pointer;
+  font-size:1rem;display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-sm);transition:all .2s;
+}
+.wishlist-btn:hover{transform:scale(1.1);}
+.wishlist-btn.active{color:#e55;}
+.product-body{padding:14px 16px 16px;}
+.product-name{font-weight:700;font-size:.95rem;margin-bottom:4px;}
+.product-farmer{font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:5px;margin-bottom:8px;}
+.product-farmer-dot{
+  width:14px;height:14px;border-radius:50%;
+  background:var(--saffron);display:flex;align-items:center;
+  justify-content:center;font-size:7px;color:white;
+}
+.product-footer{display:flex;justify-content:space-between;align-items:center;}
+.product-price{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;}
+.product-unit{font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--muted);font-weight:400;}
+.add-cart-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--saffron);color:white;border:none;cursor:pointer;
+  font-size:1rem;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;font-weight:700;
+}
+.add-cart-btn:hover{background:var(--saffron-dark);transform:scale(1.1);}
+.product-rating{
+  display:flex;align-items:center;gap:4px;
+  font-size:.75rem;color:var(--muted);margin-bottom:8px;
+}
+.product-rating .star{color:var(--turmeric);}
+
+/* ═══════════════════════════════════════════
+   ▌ PAGE 4: CART & CHECKOUT
+═══════════════════════════════════════════ */
+.cart-layout{
+  display:grid;grid-template-columns:1fr 380px;gap:28px;
+  padding:36px 5%;min-height:calc(100vh - 62px);
+  align-items:start;
+}
+.cart-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:24px;}
+.cart-items{display:flex;flex-direction:column;gap:14px;}
+.cart-item{
+  background:white;border-radius:var(--r);border:1px solid var(--border);
+  padding:16px 20px;display:flex;align-items:center;gap:16px;
+  box-shadow:var(--shadow-sm);
+}
+.cart-item-img{
+  width:68px;height:68px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;flex-shrink:0;
+}
+.cart-item-img.c1{background:linear-gradient(135deg,#fff5ec,#ffe8d6);}
+.cart-item-img.c2{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);}
+.cart-item-img.c3{background:linear-gradient(135deg,#fffde7,#fff9c4);}
+.cart-item-info{flex:1;}
+.cart-item-name{font-weight:700;font-size:.95rem;}
+.cart-item-farmer{font-size:.75rem;color:var(--muted);margin-top:2px;}
+.cart-item-price{font-weight:700;color:var(--saffron);margin-top:6px;}
+.qty-ctrl{
+  display:flex;align-items:center;gap:10px;
+}
+.qty-btn{
+  width:28px;height:28px;border-radius:50%;
+  border:1.5px solid var(--border);background:white;
+  cursor:pointer;font-size:1rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s;color:var(--earth);
+}
+.qty-btn:hover{border-color:var(--saffron);color:var(--saffron);}
+.qty-num{font-weight:700;font-size:.95rem;min-width:20px;text-align:center;}
+.remove-btn{
+  width:32px;height:32px;border-radius:50%;border:none;
+  background:rgba(229,85,85,.08);color:#e55;cursor:pointer;
+  font-size:.9rem;display:flex;align-items:center;justify-content:center;
+  transition:all .18s;flex-shrink:0;
+}
+.remove-btn:hover{background:rgba(229,85,85,.15);}
+.cart-empty{
+  text-align:center;padding:60px 20px;color:var(--muted);
+}
+.cart-empty .icon{font-size:3.5rem;margin-bottom:14px;}
+.cart-empty p{font-size:.95rem;line-height:1.6;}
+.order-summary{
+  background:white;border-radius:var(--r);border:1px solid var(--border);
+  padding:24px;box-shadow:var(--shadow-sm);
+  position:sticky;top:80px;
+}
+.order-summary-title{font-weight:700;font-size:1rem;margin-bottom:18px;}
+.summary-row{
+  display:flex;justify-content:space-between;
+  font-size:.85rem;padding:8px 0;
+  border-bottom:1px solid rgba(0,0,0,.05);
+}
+.summary-row:last-of-type{border:none;padding-bottom:0;}
+.summary-row.total{
+  font-weight:700;font-size:1rem;
+  padding-top:14px;border-top:1.5px solid var(--border);
+  border-bottom:none;
+}
+.promo-row{
+  display:flex;gap:8px;margin:14px 0;
+}
+.promo-row input{
+  flex:1;padding:9px 14px;border-radius:var(--r-sm);
+  border:1.5px solid var(--border);font-size:.82rem;
+  outline:none;transition:border-color .2s;
+}
+.promo-row input:focus{border-color:var(--saffron);}
+.promo-row button{
+  padding:9px 14px;border-radius:var(--r-sm);
+  background:var(--cream-dark);border:1.5px solid var(--border);
+  font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.promo-row button:hover{border-color:var(--saffron);color:var(--saffron);}
+.delivery-options{display:flex;flex-direction:column;gap:8px;margin:14px 0;}
+.delivery-opt{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:var(--r-sm);
+  border:1.5px solid var(--border);cursor:pointer;
+  transition:all .18s;font-size:.82rem;
+}
+.delivery-opt.selected{border-color:var(--saffron);background:rgba(232,101,10,.04);}
+.delivery-opt input{accent-color:var(--saffron);}
+.checkout-steps{
+  padding:32px 5%;max-width:860px;margin:0 auto;
+}
+.steps-indicator{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;margin-bottom:40px;
+}
+.step-ind{
+  display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;
+  color:var(--muted);
+}
+.step-ind .step-circle{
+  width:32px;height:32px;border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:700;transition:all .3s;
+}
+.step-ind.active .step-circle{
+  border-color:var(--saffron);background:var(--saffron);color:white;
+}
+.step-ind.done .step-circle{border-color:var(--green);background:var(--green);color:white;}
+.step-ind.active{color:var(--saffron);}
+.step-ind.done{color:var(--green);}
+.step-line{flex:1;height:2px;background:var(--border);margin:0 8px;max-width:80px;}
+.step-line.done{background:var(--green);}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:40px 5%;}
+  .dashboard-layout{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .market-layout{grid-template-columns:1fr;}
+  .filter-panel{display:none;}
+  .cart-layout{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .hero-title{font-size:2rem;}
+  .login-choices{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr;}
+  .auth-box{padding:28px 20px;}
+  .social-auth{grid-template-columns:1fr;}
+  .cart-item{flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     PAGE 1 — HOME / LANDING
+══════════════════════════════ -->
+<div class="page active" id="page-home">
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('page-home')">
+      <div class="logo-orb">🌾</div>
+      <div class="logo-name">Kisan<span>Mandi</span></div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" onclick="openAuth('customer')">Customer Login</button>
+      <button class="nav-btn primary" onclick="openAuth('farmer')">🧑‍🌾 Farmer Portal</button>
+    </div>
+  </nav>
+
+  <!-- TRUST -->
+  <div class="trust-strip">
+    <div class="trust-item">✅ 12,400+ Verified Farmers</div>
+    <div class="t-dot"></div>
+    <div class="trust-item">🚚 Farm-to-Door Delivery</div>
+    <div class="t-dot"></div>
+    <div class="trust-item">⚖️ Fair MSP Pricing</div>
+    <div class="t-dot"></div>
+    <div class="trust-item">📜 APMC Compliant</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-left">
+      <p class="hero-hindi">खेत से सीधे आपकी थाली तक</p>
+      <h1 class="hero-title">
+        Fresh Harvest<br>
+        from <span class="hl">Indian Farmers</span><br>
+        to Your Table
+      </h1>
+      <p class="hero-desc">Buy directly from verified farmers across 28 states. No middlemen, fair prices, and freshness you can taste. Farmers earn more. Families eat better.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="openAuth('customer')">Shop Fresh Produce →</button>
+        <button class="btn btn-secondary" onclick="openAuth('farmer')">🧑‍🌾 Sell My Harvest</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-n">12.4K+</div><div class="stat-l">Farmers</div></div>
+        <div><div class="stat-n">28</div><div class="stat-l">States</div></div>
+        <div><div class="stat-n">₹0</div><div class="stat-l">Listing Fee</div></div>
+        <div><div class="stat-n">4.8★</div><div class="stat-l">Avg Rating</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <!-- Login Choice Cards -->
+      <div style="position:relative;z-index:2;padding-left:5%;">
+        <h2 class="section-title" style="margin-bottom:8px;">Enter as</h2>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px;">Choose your role to get started</p>
+        <div class="login-choices">
+          <div class="choice-card farmer-card" onclick="openAuth('farmer')">
+            <span class="choice-icon">🧑‍🌾</span>
+            <div class="choice-title">I'm a Farmer</div>
+            <div class="choice-sub">List crops, manage orders, track earnings directly</div>
+          </div>
+          <div class="choice-card" onclick="openAuth('customer')">
+            <span class="choice-icon">🛒</span>
+            <div class="choice-title">I'm a Customer</div>
+            <div class="choice-sub">Buy fresh produce directly from verified farmers</div>
+          </div>
+        </div>
+        <div style="margin-top:20px;background:white;border-radius:var(--r);border:1px solid var(--border);padding:18px;box-shadow:var(--shadow-sm);">
+          <div style="display:flex;gap:14px;align-items:center;">
+            <div style="font-size:2rem;">📦</div>
+            <div>
+              <div style="font-weight:700;font-size:.9rem;">New: Bulk & B2B Orders</div>
+              <div style="font-size:.75rem;color:var(--muted);margin-top:3px;">Restaurants & retailers — get special pricing on bulk orders from farmers near you.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 2 — AUTH
+══════════════════════════════ -->
+<div class="page" id="page-auth">
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('page-home')">
+      <div class="logo-orb">🌾</div>
+      <div class="logo-name">Kisan<span>Mandi</span></div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" onclick="showPage('page-home')">← Back to Home</button>
+    </div>
+  </nav>
+
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <div id="auth-role-badge" class="auth-role-badge farmer">🧑‍🌾 Farmer Portal</div>
+      <h2 class="auth-title" id="auth-title">Welcome Back</h2>
+      <p class="auth-sub" id="auth-sub">Sign in to manage your crops and earnings</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="form-login">
+        <div class="social-auth">
+          <div class="social-btn-auth">📱 Google</div>
+          <div class="social-btn-auth">📘 Facebook</div>
+        </div>
+        <div class="divider">or use email</div>
+        <div class="form-group">
+          <label class="form-label">Email / Mobile Number</label>
+          <input class="form-input" type="text" placeholder="you@example.com or 9876543210">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" type="password" placeholder="••••••••">
+        </div>
+        <div style="text-align:right;margin-bottom:18px;">
+          <a style="font-size:.78rem;color:var(--saffron);font-weight:600;cursor:pointer;">Forgot password?</a>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="doLogin()" id="login-btn">Sign In →</button>
+        <div class="switch-link">
+          Don't have an account? <a onclick="switchAuthTab('register')">Register free</a>
+        </div>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="form-register" style="display:none;">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="Ramesh">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" placeholder="Patel">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile Number</label>
+          <input class="form-input" type="tel" placeholder="+91 9876543210">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="ramesh@example.com">
+        </div>
+        <div id="farmer-extra-fields">
+          <div class="form-group">
+            <label class="form-label">State</label>
+            <select class="form-select">
+              <option>Select your state</option>
+              <option>Maharashtra</option><option>Punjab</option><option>Uttar Pradesh</option>
+              <option>Madhya Pradesh</option><option>Gujarat</option><option>Karnataka</option>
+              <option>Tamil Nadu</option><option>Rajasthan</option><option>Andhra Pradesh</option>
+              <option>West Bengal</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Village / Tehsil</label>
+              <input class="form-input" type="text" placeholder="Sehore">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Farm Size (Acres)</label>
+              <input class="form-input" type="number" placeholder="5">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Aadhaar Number (for verification)</label>
+            <input class="form-input" type="text" placeholder="XXXX XXXX XXXX" maxlength="14">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" type="password" placeholder="Min 8 characters">
+        </div>
+        <button class="btn btn-primary btn-full" onclick="doRegister()" style="margin-top:4px;">Create Account →</button>
+        <div class="switch-link">
+          Already registered? <a onclick="switchAuthTab('login')">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 3 — FARMER DASHBOARD
+══════════════════════════════ -->
+<div class="page" id="page-farmer">
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('page-home')">
+      <div class="logo-orb">🌾</div>
+      <div class="logo-name">Kisan<span>Mandi</span></div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-pill">
+        <div class="nav-avatar" id="farmer-avatar-nav">R</div>
+        <span id="farmer-name-nav">Shyam Patil</span>
+      </div>
+      <button class="nav-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">👨‍🌾</div>
+        <div class="sidebar-name" id="sidebar-farmer-name">Ramesh Patel</div>
+        <div class="sidebar-role">Farmer · Akola, MH</div>
+        <div class="sidebar-verified">✅ PM Kisan Verified</div>
+      </div>
+      <div class="sidebar-nav">
+        <div class="sidebar-section">Main</div>
+        <div class="sidebar-item active" onclick="switchDashTab('overview',this)">
+          <span class="si">📊</span> Dashboard
+        </div>
+        <div class="sidebar-item" onclick="switchDashTab('crops',this)">
+          <span class="si">🌾</span> My Crops
+        </div>
+        <div class="sidebar-item" onclick="switchDashTab('upload',this)">
+          <span class="si">➕</span> List New Crop
+        </div>
+        <div class="sidebar-item" onclick="switchDashTab('orders',this)">
+          <span class="si">📦</span> Orders
+        </div>
+        <div class="sidebar-section">Insights</div>
+        <div class="sidebar-item" onclick="switchDashTab('earnings',this)">
+          <span class="si">💰</span> Earnings
+        </div>
+        <div class="sidebar-item" onclick="switchDashTab('profile',this)">
+          <span class="si">👤</span> My Profile
+        </div>
+        <div class="sidebar-section">Support</div>
+        <div class="sidebar-item" onclick="showToast('📞 Kisan Helpline: 1800-180-1551')">
+          <span class="si">📞</span> Helpline
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN AREA -->
+    <div class="dash-main">
+
+      <!-- OVERVIEW TAB -->
+      <div id="dash-overview" class="dash-tab">
+        <div class="dash-header">
+          <div>
+            <div class="dash-greeting" id="dash-greeting">Jai Kisan, Ramesh! 🙏</div>
+            <div class="dash-date" id="dash-date">Tuesday, April 2026</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="switchDashTab('upload',null)">+ List New Crop</button>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-card-icon">💰</div>
+            <div class="stat-card-n">₹24,850</div>
+            <div class="stat-card-l">This Month</div>
+            <div class="stat-card-change up">↑ 18% vs last month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">📦</div>
+            <div class="stat-card-n">37</div>
+            <div class="stat-card-l">Total Orders</div>
+            <div class="stat-card-change up">↑ 5 new today</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">🌾</div>
+            <div class="stat-card-n" id="crop-count-stat">4</div>
+            <div class="stat-card-l">Active Listings</div>
+            <div class="stat-card-change up">All selling well</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">⭐</div>
+            <div class="stat-card-n">4.8</div>
+            <div class="stat-card-l">Avg Rating</div>
+            <div class="stat-card-change up">↑ Top 10% farmers</div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-title"><span class="icon">📦</span>Recent Orders</div>
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th><th>Crop</th><th>Buyer</th><th>Qty</th><th>Amount</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recent-orders-body">
+              <tr><td>#ORD-1042</td><td>Sharbati Wheat</td><td>Arjun Mehta</td><td>50 kg</td><td>₹1,400</td><td><span class="status-badge delivered">Delivered</span></td></tr>
+              <tr><td>#ORD-1041</td><td>Soybean</td><td>Radha's Kitchen</td><td>20 kg</td><td>₹1,100</td><td><span class="status-badge processing">Processing</span></td></tr>
+              <tr><td>#ORD-1040</td><td>Desi Tomato</td><td>Meena Sharma</td><td>10 kg</td><td>₹320</td><td><span class="status-badge pending">Pending</span></td></tr>
+              <tr><td>#ORD-1039</td><td>Corn</td><td>FreshMart Store</td><td>100 kg</td><td>₹2,800</td><td><span class="status-badge delivered">Delivered</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CROPS TAB -->
+      <div id="dash-crops" class="dash-tab" style="display:none;">
+        <div class="dash-header">
+          <div>
+            <div class="dash-greeting">My Listed Crops</div>
+            <div class="dash-date">Manage your active produce listings</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="switchDashTab('upload',null)">+ Add New</button>
+        </div>
+        <div class="crop-grid" id="farmer-crops-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- UPLOAD TAB -->
+      <div id="dash-upload" class="dash-tab" style="display:none;">
+        <div class="dash-header">
+          <div>
+            <div class="dash-greeting">List a New Crop</div>
+            <div class="dash-date">Your produce will go live instantly after listing</div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-title"><span class="icon">🌾</span>Crop Details</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Crop Name *</label>
+              <input class="form-input" type="text" id="new-crop-name" placeholder="e.g. Sharbati Wheat">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <select class="form-select" id="new-crop-category">
+                <option value="">Select category</option>
+                <option>🌾 Grains & Pulses</option>
+                <option>🥦 Vegetables</option>
+                <option>🍎 Fruits</option>
+                <option>🌶️ Spices</option>
+                <option>🫚 Oils & Ghee</option>
+                <option>🍯 Honey & Dairy</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Price per Unit (₹) *</label>
+              <input class="form-input" type="number" id="new-crop-price" placeholder="28">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Unit</label>
+              <select class="form-select" id="new-crop-unit">
+                <option>kg</option><option>quintal</option><option>litre</option>
+                <option>dozen</option><option>piece</option><option>bag (50 kg)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Available Quantity *</label>
+              <input class="form-input" type="number" id="new-crop-qty" placeholder="500">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Harvest Date</label>
+              <input class="form-input" type="date" id="new-crop-date">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-textarea" id="new-crop-desc" placeholder="Describe your crop quality, growing method (organic/conventional), storage details, etc."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Emoji / Icon (for listing)</label>
+              <select class="form-select" id="new-crop-emoji">
+                <option value="🌾">🌾 Wheat/Grain</option>
+                <option value="🍅">🍅 Tomato</option>
+                <option value="🥭">🥭 Mango</option>
+                <option value="🧅">🧅 Onion</option>
+                <option value="🌶️">🌶️ Chilli</option>
+                <option value="🥬">🥬 Leafy Green</option>
+                <option value="🥕">🥕 Carrot</option>
+                <option value="🫘">🫘 Pulses</option>
+                <option value="🍋">🍋 Citrus</option>
+                <option value="🌽">🌽 Corn</option>
+                <option value="🥜">🥜 Peanut</option>
+                <option value="🍯">🍯 Honey</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Certification</label>
+              <select class="form-select" id="new-crop-cert">
+                <option>Conventional</option>
+                <option>Organic Certified</option>
+                <option>GI Tagged</option>
+                <option>Natural Farming</option>
+              </select>
+            </div>
+          </div>
+          <div class="upload-zone" id="upload-zone">
+            <div class="uz-icon">📸</div>
+            <div class="uz-text">
+              <strong>Click to upload photos</strong> or drag and drop<br>
+              JPG, PNG up to 5MB each · Max 5 photos
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <button class="btn btn-primary" onclick="addNewCrop()" style="flex:1;">✅ List My Crop Now</button>
+            <button class="btn btn-secondary" onclick="switchDashTab('crops',null)">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORDERS TAB -->
+      <div id="dash-orders" class="dash-tab" style="display:none;">
+        <div class="dash-header">
+          <div>
+            <div class="dash-greeting">All Orders</div>
+            <div class="dash-date">Track and manage your customer orders</div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-title"><span class="icon">📦</span>Order Management</div>
+          <table class="orders-table">
+            <thead>
+              <tr><th>Order ID</th><th>Crop</th><th>Buyer</th><th>Location</th><th>Qty</th><th>Amount</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>#ORD-1042</td><td>🌾 Sharbati Wheat</td><td>Arjun Mehta</td><td>Bhopal, MP</td><td>50 kg</td><td>₹1,400</td><td><span class="status-badge delivered">Delivered</span></td><td><button class="btn btn-sm btn-secondary" style="padding:4px 10px;font-size:.7rem;">View</button></td></tr>
+              <tr><td>#ORD-1041</td><td>🫘 Soybean</td><td>Radha's Kitchen</td><td>Indore, MP</td><td>20 kg</td><td>₹1,100</td><td><span class="status-badge processing">Processing</span></td><td><button class="btn btn-sm btn-green" style="padding:4px 10px;font-size:.7rem;" onclick="showToast('✅ Order marked as shipped!')">Ship</button></td></tr>
+              <tr><td>#ORD-1040</td><td>🍅 Desi Tomato</td><td>Meena Sharma</td><td>Nagpur, MH</td><td>10 kg</td><td>₹320</td><td><span class="status-badge pending">Pending</span></td><td><button class="btn btn-sm btn-primary" style="padding:4px 10px;font-size:.7rem;" onclick="showToast('✅ Order accepted!')">Accept</button></td></tr>
+              <tr><td>#ORD-1039</td><td>🌽 Corn</td><td>FreshMart Store</td><td>Pune, MH</td><td>100 kg</td><td>₹2,800</td><td><span class="status-badge delivered">Delivered</span></td><td><button class="btn btn-sm btn-secondary" style="padding:4px 10px;font-size:.7rem;">View</button></td></tr>
+              <tr><td>#ORD-1038</td><td>🌾 Wheat</td><td>Suresh Kumar</td><td>Jabalpur, MP</td><td>25 kg</td><td>₹700</td><td><span class="status-badge pending">Pending</span></td><td><button class="btn btn-sm btn-primary" style="padding:4px 10px;font-size:.7rem;" onclick="showToast('✅ Order accepted!')">Accept</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EARNINGS TAB -->
+      <div id="dash-earnings" class="dash-tab" style="display:none;">
+        <div class="dash-header">
+          <div>
+            <div class="dash-greeting">Earnings Overview</div>
+            <div class="dash-date">Direct payments — no middlemen</div>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-card-icon">💰</div><div class="stat-card-n">₹54,200</div><div class="stat-card-l">Total Earned</div><div class="stat-card-change up">Since joining</div></div>
+          <div class="stat-card"><div class="stat-card-icon">📅</div><div class="stat-card-n">₹24,850</div><div class="stat-card-l">This Month</div><div class="stat-card-change up">↑ 18%</div></div>
+          <div class="stat-card"><div class="stat-card-icon">⏳</div><div class="stat-card-n">₹4,220</div><div class="stat-card-l">Pending Payout</div><div class="stat-card-change">In 24 hrs</div></div>
+          <div class="stat-card"><div class="stat-card-icon">🏦</div><div class="stat-card-n">₹0</div><div class="stat-card-l">Platform Fee</div><div class="stat-card-change up">Always free</div></div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-title"><span class="icon">💳</span>Bank Account Linked</div>
+          <div style="display:flex;align-items:center;gap:16px;padding:12px;background:var(--cream);border-radius:var(--r-sm);">
+            <div style="font-size:2rem;">🏦</div>
+            <div>
+              <div style="font-weight:700;font-size:.92rem;">State Bank of India</div>
+              <div style="font-size:.78rem;color:var(--muted);">A/C: XXXX XXXX 4821 · IFSC: SBIN0003456</div>
+              <div style="font-size:.72rem;color:var(--green);margin-top:4px;font-weight:600;">✅ Verified</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showToast('🔗 Bank update feature coming soon!')">Update</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE TAB -->
+      <div id="dash-profile" class="dash-tab" style="display:none;">
+        <div class="dash-header">
+          <div>
+            <div class="dash-greeting">My Profile</div>
+            <div class="dash-date">Your farmer identity on KisanMandi</div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-title"><span class="icon">👤</span>Personal Information</div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" value="Shyam Patil" id="profile-name"></div>
+            <div class="form-group"><label class="form-label">Mobile</label><input class="form-input" value="+91 9xxxxxxxx"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">State</label><select class="form-select"><option>Maharashtra</option></select></div>
+            <div class="form-group"><label class="form-label">Village / District</label><input class="form-input" value="Akola"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Farm Size (Acres)</label><input class="form-input" type="number" value="6"></div>
+            <div class="form-group"><label class="form-label">Farming Type</label><select class="form-select"><option>Conventional</option><option>Organic</option><option>Natural</option></select></div>
+          </div>
+          <div class="form-group"><label class="form-label">About Your Farm</label><textarea class="form-textarea">Third-generation farmer from Akola, MH. Specializing in Sharbati wheat and soybean. Using sustainable practices since 2018.</textarea></div>
+          <button class="btn btn-primary" onclick="showToast('✅ Profile updated successfully!')">Save Changes</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 4 — CUSTOMER MARKETPLACE
+══════════════════════════════ -->
+<div class="page" id="page-customer">
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('page-home')">
+      <div class="logo-orb">🌾</div>
+      <div class="logo-name">Kisan<span>Mandi</span></div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-pill">
+        <div class="nav-avatar" id="customer-avatar-nav">C</div>
+        <span id="customer-name-nav">Chinmay</span>
+      </div>
+      <div class="cart-badge" onclick="showPage('page-cart')">
+        🛒
+        <div class="cart-count" id="cart-count">0</div>
+      </div>
+      <button class="nav-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Market Hero -->
+  <div class="market-hero">
+    <div class="market-hero-title">Fresh from Indian Farms 🌿</div>
+    <div class="market-hero-sub">Directly sourced · No middlemen · Better for farmers & you</div>
+    <div class="search-bar">
+      <span style="font-size:1rem;">🔍</span>
+      <input type="text" placeholder="Search wheat, tomatoes, mangoes…" id="search-input" oninput="filterProducts()">
+      <button class="btn btn-primary btn-sm">Search</button>
+    </div>
+  </div>
+
+  <div class="market-body">
+    <!-- Category pills -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;">
+      <button class="btn btn-primary btn-sm" onclick="filterByCategory('all',this)">All</button>
+      <button class="btn btn-secondary btn-sm" onclick="filterByCategory('grain',this)">🌾 Grains</button>
+      <button class="btn btn-secondary btn-sm" onclick="filterByCategory('veg',this)">🥦 Vegetables</button>
+      <button class="btn btn-secondary btn-sm" onclick="filterByCategory('fruit',this)">🍎 Fruits</button>
+      <button class="btn btn-secondary btn-sm" onclick="filterByCategory('spice',this)">🌶️ Spices</button>
+      <button class="btn btn-secondary btn-sm" onclick="filterByCategory('organic',this)">🌿 Organic</button>
+    </div>
+
+    <div class="market-layout">
+      <!-- Filter Sidebar -->
+      <div class="filter-panel">
+        <div class="filter-card">
+          <div class="filter-title">🔧 Filters</div>
+          <div class="filter-group">
+            <div class="filter-group-label">Chinmay Ihare</div>
+            <div class="range-row">₹0 <input type="range" min="0" max="500" value="500"> ₹500</div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-group-label">Certification</div>
+            <label class="filter-option"><input type="checkbox"> Organic Certified</label>
+            <label class="filter-option"><input type="checkbox"> GI Tagged</label>
+            <label class="filter-option"><input type="checkbox"> Natural Farming</label>
+          </div>
+          <div class="filter-group">
+            <div class="filter-group-label">State</div>
+            <label class="filter-option"><input type="checkbox"> Maharashtra</label>
+            <label class="filter-option"><input type="checkbox"> Punjab</label>
+            <label class="filter-option"><input type="checkbox"> Madhya Pradesh</label>
+            <label class="filter-option"><input type="checkbox"> Tamil Nadu</label>
+            <label class="filter-option"><input type="checkbox"> Gujarat</label>
+          </div>
+          <div class="filter-group">
+            <div class="filter-group-label">Rating</div>
+            <label class="filter-option"><input type="checkbox"> 4★ & above</label>
+            <label class="filter-option"><input type="checkbox"> 5★ Only</label>
+          </div>
+          <button class="btn btn-primary btn-sm btn-full" onclick="showToast('🔍 Filters applied!')">Apply Filters</button>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div>
+        <div class="market-top">
+          <div class="result-count" id="result-count">Showing all products</div>
+          <select class="sort-select" onchange="sortProducts(this.value)">
+            <option value="default">Sort by: Relevance</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+          </select>
+        </div>
+        <div class="market-grid" id="product-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 5 — CART
+══════════════════════════════ -->
+<div class="page" id="page-cart">
+  <nav class="nav">
+    <div class="nav-logo" onclick="showPage('page-home')">
+      <div class="logo-orb">🌾</div>
+      <div class="logo-name">Kisan<span>Mandi</span></div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" onclick="showPage('page-customer')">← Continue Shopping</button>
+      <div class="cart-badge" onclick="showPage('page-cart')">
+        🛒
+        <div class="cart-count" id="cart-count-2">0</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Checkout Steps -->
+  <div class="checkout-steps">
+    <div class="steps-indicator">
+      <div class="step-ind active" id="step1-ind">
+        <div class="step-circle">1</div>
+        <span>Cart</span>
+      </div>
+      <div class="step-line" id="line1"></div>
+      <div class="step-ind" id="step2-ind">
+        <div class="step-circle">2</div>
+        <span>Delivery</span>
+      </div>
+      <div class="step-line" id="line2"></div>
+      <div class="step-ind" id="step3-ind">
+        <div class="step-circle">3</div>
+        <span>Payment</span>
+      </div>
+    </div>
+
+    <!-- STEP 1: Cart Review -->
+    <div id="checkout-step1">
+      <div class="cart-layout" style="padding:0;grid-template-columns:1fr 340px;">
+        <div>
+          <div class="cart-title">Your Cart 🛒</div>
+          <div class="cart-items" id="cart-items-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="order-summary">
+          <div class="order-summary-title">Order Summary</div>
+          <div class="summary-row"><span>Subtotal</span><span id="sum-subtotal">₹0</span></div>
+          <div class="summary-row"><span>Delivery</span><span id="sum-delivery">₹40</span></div>
+          <div class="summary-row"><span>Platform Fee</span><span style="color:var(--green)">FREE</span></div>
+
+          <div class="promo-row">
+            <input type="text" placeholder="Promo code" id="promo-input">
+            <button onclick="applyPromo()">Apply</button>
+          </div>
+          <div class="summary-row" id="discount-row" style="display:none;color:var(--green);">
+            <span>Discount</span><span id="sum-discount">-₹0</span>
+          </div>
+
+          <div style="margin:14px 0 10px;font-size:.78rem;font-weight:700;color:var(--muted);">DELIVERY TYPE</div>
+          <div class="delivery-options">
+            <label class="delivery-opt selected" onclick="selectDelivery(this,40)">
+              <input type="radio" name="delivery" checked> 🚛 Standard (3-5 days) — ₹40
+            </label>
+            <label class="delivery-opt" onclick="selectDelivery(this,100)">
+              <input type="radio" name="delivery"> ⚡ Express (1-2 days) — ₹100
+            </label>
+            <label class="delivery-opt" onclick="selectDelivery(this,0)">
+              <input type="radio" name="delivery"> 🤝 Pickup from Farmer — FREE
+            </label>
+          </div>
+
+          <div class="summary-row total"><span>Total</span><span id="sum-total">₹40</span></div>
+          <button class="btn btn-primary btn-full" onclick="goToStep(2)" style="margin-top:16px;">Proceed to Delivery →</button>
+          <div style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:12px;">🔒 Secure checkout · Money-back guarantee</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Delivery Details -->
+    <div id="checkout-step2" style="display:none;">
+      <div class="cart-layout" style="padding:0;grid-template-columns:1fr 340px;">
+        <div class="section-card" style="box-shadow:none;">
+          <div class="section-card-title"><span class="icon">🏠</span>Delivery Address</div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" placeholder="Chinmay Ihare"></div>
+            <div class="form-group"><label class="form-label">Mobile</label><input class="form-input" placeholder="+91 9876543210" type="tel"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Address Line 1</label><input class="form-input" placeholder="Flat 4B, Sunrise Apartments"></div>
+          <div class="form-group"><label class="form-label">Address Line 2</label><input class="form-input" placeholder="Civil Lines, Near Gandhi Chowk"></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">City</label><input class="form-input" placeholder="Nagpur"></div>
+            <div class="form-group"><label class="form-label">State</label><select class="form-select"><option>Maharashtra</option><option>Punjab</option><option>MP</option></select></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">PIN Code</label><input class="form-input" placeholder="440001" maxlength="6"></div>
+            <div class="form-group"><label class="form-label">Delivery Notes</label><input class="form-input" placeholder="Leave at door"></div>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:8px;">
+            <button class="btn btn-secondary" onclick="goToStep(1)">← Back</button>
+            <button class="btn btn-primary" style="flex:1;" onclick="goToStep(3)">Continue to Payment →</button>
+          </div>
+        </div>
+        <div class="order-summary">
+          <div class="order-summary-title">Order Summary</div>
+          <div class="summary-row"><span>Subtotal</span><span id="sum-subtotal2">₹0</span></div>
+          <div class="summary-row"><span>Delivery</span><span id="sum-delivery2">₹40</span></div>
+          <div class="summary-row total"><span>Total</span><span id="sum-total2">₹40</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Payment -->
+    <div id="checkout-step3" style="display:none;">
+      <div class="cart-layout" style="padding:0;grid-template-columns:1fr 340px;">
+        <div class="section-card" style="box-shadow:none;">
+          <div class="section-card-title"><span class="icon">💳</span>Payment Method</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px;">
+            <label style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r-sm);border:1.5px solid var(--saffron);background:rgba(232,101,10,.04);cursor:pointer;">
+              <input type="radio" name="payment" checked style="accent-color:var(--saffron);"> 📱 UPI (GPay, PhonePe, Paytm)
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r-sm);border:1.5px solid var(--border);cursor:pointer;">
+              <input type="radio" name="payment" style="accent-color:var(--saffron);"> 💳 Credit / Debit Card
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r-sm);border:1.5px solid var(--border);cursor:pointer;">
+              <input type="radio" name="payment" style="accent-color:var(--saffron);"> 🏦 Net Banking
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r-sm);border:1.5px solid var(--border);cursor:pointer;">
+              <input type="radio" name="payment" style="accent-color:var(--saffron);"> 💵 Cash on Delivery
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="form-label">UPI ID</label>
+            <input class="form-input" placeholder="yourname@upi">
+          </div>
+          <div style="display:flex;gap:12px;margin-top:8px;">
+            <button class="btn btn-secondary" onclick="goToStep(2)">← Back</button>
+            <button class="btn btn-green" style="flex:1;" onclick="placeOrder()">✅ Place Order · Pay Now</button>
+          </div>
+        </div>
+        <div class="order-summary">
+          <div class="order-summary-title">Order Summary</div>
+          <div class="summary-row"><span>Subtotal</span><span id="sum-subtotal3">₹0</span></div>
+          <div class="summary-row"><span>Delivery</span><span id="sum-delivery3">₹40</span></div>
+          <div class="summary-row total"><span>Total</span><span id="sum-total3">₹40</span></div>
+          <div style="margin-top:16px;padding:12px;background:rgba(58,155,111,.08);border-radius:var(--r-sm);font-size:.78rem;color:var(--green);line-height:1.6;">
+            🌿 Your order supports Indian farmers directly. 100% of price goes to the farmer.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal" style="text-align:center;">
+    <div style="font-size:4rem;margin-bottom:16px;">🎉</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:8px;">Order Placed!</h2>
+    <p style="color:var(--muted);font-size:.88rem;line-height:1.7;margin-bottom:22px;">
+      Your order has been placed successfully. The farmer will confirm within 2 hours. Payment goes directly to the farmer!
+    </p>
+    <div style="background:var(--cream-dark);border-radius:var(--r-sm);padding:14px;margin-bottom:22px;font-size:.82rem;">
+      <strong>Order #ORD-1043</strong><br>
+      <span style="color:var(--muted);">Expected delivery: 3–5 business days</span>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="closeModal();showPage('page-customer')">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toast-msg">Done!</span>
+</div>
+
+<script>
+/* ══════════════════════════════════
+   DATA
+══════════════════════════════════ */
+let currentRole = 'farmer';
+let cart = [];
+let deliveryCost = 40;
+let discountAmount = 0;
+let wishlist = new Set();
+
+const products = [
+  {id:1, name:'Sharbati Wheat', farmer:'Ramesh Patel', loc:'Sehore, MP', price:28, unit:'kg', emoji:'🌾', bg:'c1', badge:'Fresh', category:'grain', rating:4.8, cert:'Conventional'},
+  {id:2, name:'Baby Spinach', farmer:'Sunita Devi', loc:'Ooty, TN', price:45, unit:'kg', emoji:'🥬', bg:'c2', badge:'Organic', category:'veg', rating:4.9, cert:'Organic'},
+  {id:3, name:'Kesar Mango', farmer:'Bhavesh Patel', loc:'Gir, GJ', price:190, unit:'dozen', emoji:'🥭', bg:'c3', badge:'Seasonal', category:'fruit', rating:4.7, cert:'Conventional'},
+  {id:4, name:'Red Onion', farmer:'Ganesh Nair', loc:'Nashik, MH', price:18, unit:'kg', emoji:'🧅', bg:'c4', badge:'Direct', category:'veg', rating:4.6, cert:'Conventional'},
+  {id:5, name:'Alphonso Mango', farmer:'Santosh Rane', loc:'Ratnagiri, MH', price:240, unit:'dozen', emoji:'🥭', bg:'c5', badge:'GI Tag', category:'fruit', rating:5.0, cert:'GI Tagged'},
+  {id:6, name:'Byadagi Chilli', farmer:'Lakshmi Naik', loc:'Haveri, KA', price:180, unit:'kg', emoji:'🌶️', bg:'c6', badge:'GI Tag', category:'spice', rating:4.8, cert:'GI Tagged'},
+  {id:7, name:'Masoor Dal', farmer:'Kishan Yadav', loc:'Jhansi, UP', price:95, unit:'kg', emoji:'🫘', bg:'c1', badge:'Fresh', category:'grain', rating:4.5, cert:'Conventional'},
+  {id:8, name:'Cherry Tomatoes', farmer:'Priya Sharma', loc:'Shimla, HP', price:65, unit:'kg', emoji:'🍅', bg:'c2', badge:'Organic', category:'veg', rating:4.9, cert:'Organic'},
+  {id:9, name:'Turmeric Powder', farmer:'Rajammal P.', loc:'Erode, TN', price:140, unit:'kg', emoji:'🌿', bg:'c3', badge:'Organic', category:'spice', rating:4.7, cert:'Organic'},
+  {id:10, name:'Basmati Rice', farmer:'Gurpreet Singh', loc:'Amritsar, PB', price:85, unit:'kg', emoji:'🌾', bg:'c4', badge:'GI Tag', category:'grain', rating:4.9, cert:'GI Tagged'},
+  {id:11, name:'Green Chilli', farmer:'Meena Kumari', loc:'Guntur, AP', price:55, unit:'kg', emoji:'🌶️', bg:'c5', badge:'Fresh', category:'spice', rating:4.4, cert:'Conventional'},
+  {id:12, name:'Raw Honey', farmer:'Suresh Beekeeping', loc:'Coorg, KA', price:320, unit:'kg', emoji:'🍯', bg:'c6', badge:'Organic', category:'organic', rating:5.0, cert:'Organic'},
+];
+
+let farmerCrops = [
+  {id:101, name:'Sharbati Wheat', price:28, unit:'kg', qty:500, emoji:'🌾', bg:'c1', cert:'Conventional'},
+  {id:102, name:'Soybean', price:55, unit:'kg', qty:200, emoji:'🫘', bg:'c2', cert:'Conventional'},
+  {id:103, name:'Desi Tomato', price:32, unit:'kg', qty:80, emoji:'🍅', bg:'c3', cert:'Organic'},
+  {id:104, name:'Corn', price:28, unit:'kg', qty:300, emoji:'🌽', bg:'c4', cert:'Conventional'},
+];
+
+let filteredProducts = [...products];
+
+/* ══════════════════════════════════
+   PAGE ROUTING
+══════════════════════════════════ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function openAuth(role) {
+  currentRole = role;
+  const badge = document.getElementById('auth-role-badge');
+  const title = document.getElementById('auth-title');
+  const sub = document.getElementById('auth-sub');
+  const farmerFields = document.getElementById('farmer-extra-fields');
+  if (role === 'farmer') {
+    badge.textContent = '🧑‍🌾 Farmer Portal';
+    badge.className = 'auth-role-badge farmer';
+    title.textContent = 'Farmer Sign In';
+    sub.textContent = 'Sign in to manage your crops and earnings';
+    if (farmerFields) farmerFields.style.display = 'block';
+  } else {
+    badge.textContent = '🛒 Customer Portal';
+    badge.className = 'auth-role-badge customer';
+    title.textContent = 'Welcome Back';
+    sub.textContent = 'Sign in to shop fresh produce from farmers';
+    if (farmerFields) farmerFields.style.display = 'none';
+  }
+  switchAuthTab('login');
+  showPage('page-auth');
+}
+
+function switchAuthTab(tab) {
+  const loginEl = document.getElementById('tab-login');
+  const regEl = document.getElementById('tab-register');
+  const loginForm = document.getElementById('form-login');
+  const regForm = document.getElementById('form-register');
+  const farmerFields = document.getElementById('farmer-extra-fields');
+  if (tab === 'login') {
+    loginEl.classList.add('active'); regEl.classList.remove('active');
+    loginForm.style.display = 'block'; regForm.style.display = 'none';
+  } else {
+    regEl.classList.add('active'); loginEl.classList.remove('active');
+    regForm.style.display = 'block'; loginForm.style.display = 'none';
+    if (farmerFields) farmerFields.style.display = currentRole === 'farmer' ? 'block' : 'none';
+  }
+}
+
+function doLogin() {
+  const btn = document.getElementById('login-btn');
+  btn.textContent = 'Signing in…';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = 'Sign In →';
+    btn.disabled = false;
+    if (currentRole === 'farmer') {
+      renderFarmerCrops();
+      updateCropCountStat();
+      showPage('page-farmer');
+      showToast('🙏 Welcome back, Ramesh Patel!');
+    } else {
+      renderProducts(products);
+      updateCartUI();
+      showPage('page-customer');
+      showToast('👋 Welcome back! Shop fresh produce.');
+    }
+  }, 900);
+}
+
+function doRegister() {
+  showToast('✅ Account created! Verify your Aadhaar to go live.');
+  setTimeout(() => doLogin(), 1200);
+}
+
+function doLogout() {
+  showPage('page-home');
+  showToast('👋 Logged out. Come back soon!');
+}
+
+/* ══════════════════════════════════
+   FARMER DASHBOARD
+══════════════════════════════════ */
+function switchDashTab(tab, el) {
+  document.querySelectorAll('.dash-tab').forEach(t => t.style.display = 'none');
+  document.getElementById('dash-' + tab).style.display = 'block';
+  if (el) {
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+  if (tab === 'crops') renderFarmerCrops();
+}
+
+function renderFarmerCrops() {
+  const grid = document.getElementById('farmer-crops-grid');
+  if (!grid) return;
+  grid.innerHTML = farmerCrops.map(c => `
+    <div class="crop-listing">
+      <div class="crop-img ${c.bg}">${c.emoji}</div>
+      <div class="crop-body">
+        <div class="crop-name">${c.name}</div>
+        <div class="crop-price">₹${c.price} / ${c.unit}</div>
+        <div class="crop-stock">Stock: ${c.qty} ${c.unit} · ${c.cert}</div>
+        <div class="crop-actions">
+          <button class="crop-action-btn" onclick="editCrop(${c.id})">✏️ Edit</button>
+          <button class="crop-action-btn danger" onclick="deleteCrop(${c.id})">🗑️ Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateCropCountStat() {
+  const el = document.getElementById('crop-count-stat');
+  if (el) el.textContent = farmerCrops.length;
+}
+
+function editCrop(id) {
+  showToast('✏️ Edit mode for crop #' + id + ' — coming in full version!');
+}
+
+function deleteCrop(id) {
+  farmerCrops = farmerCrops.filter(c => c.id !== id);
+  renderFarmerCrops();
+  updateCropCountStat();
+  // Also remove from marketplace
+  const idx = products.findIndex(p => p.id === id);
+  if (idx > -1) products.splice(idx, 1);
+  showToast('🗑️ Crop listing removed.');
+}
+
+function addNewCrop() {
+  const name = document.getElementById('new-crop-name').value.trim();
+  const price = parseFloat(document.getElementById('new-crop-price').value);
+  const qty = document.getElementById('new-crop-qty').value;
+  const emoji = document.getElementById('new-crop-emoji').value;
+  const unit = document.getElementById('new-crop-unit').value;
+  const cert = document.getElementById('new-crop-cert').value;
+
+  if (!name || !price || !qty) {
+    showToast('⚠️ Please fill in all required fields!');
+    return;
+  }
+
+  const bgs = ['c1','c2','c3','c4','c5','c6'];
+  const newId = Date.now();
+  const newCrop = {id: newId, name, price, unit, qty: parseInt(qty), emoji, bg: bgs[farmerCrops.length % 6], cert};
+  farmerCrops.push(newCrop);
+
+  // Also add to marketplace
+  products.push({id: newId, name, farmer:'Ramesh Patel', loc:'Sehore, MP', price, unit, emoji, bg: newCrop.bg, badge: cert === 'Organic Certified' ? 'Organic' : 'Fresh', category:'grain', rating:5.0, cert});
+  filteredProducts = [...products];
+
+  updateCropCountStat();
+  showToast('✅ ' + name + ' listed successfully! Now visible to buyers.');
+
+  // Reset form
+  document.getElementById('new-crop-name').value = '';
+  document.getElementById('new-crop-price').value = '';
+  document.getElementById('new-crop-qty').value = '';
+  document.getElementById('new-crop-desc').value = '';
+
+  switchDashTab('crops', null);
+  document.querySelector('.sidebar-item:nth-child(2)').classList.add('active');
+}
+
+// Date greeting
+(function(){
+  const d = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const el = document.getElementById('dash-date');
+  if (el) el.textContent = days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getFullYear();
+})();
+
+/* ══════════════════════════════════
+   MARKETPLACE
+══════════════════════════════════ */
+function renderProducts(list) {
+  const grid = document.getElementById('product-grid');
+  const count = document.getElementById('result-count');
+  if (!grid) return;
+  if (list.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);"><div style="font-size:3rem;margin-bottom:12px;">🌾</div><p>No crops found. Try different filters.</p></div>';
+    if (count) count.textContent = '0 products found';
+    return;
+  }
+  if (count) count.textContent = `Showing ${list.length} products`;
+  grid.innerHTML = list.map(p => `
+    <div class="product-card" onclick="showToast('📦 View ${p.name} details — full product page in complete version!')">
+      <div class="product-img ${p.bg}">
+        <span class="product-badge">${p.badge}</span>
+        <button class="wishlist-btn ${wishlist.has(p.id)?'active':''}" onclick="toggleWishlist(event,${p.id})" title="Save">
+          ${wishlist.has(p.id) ? '❤️' : '🤍'}
+        </button>
+        <span style="font-size:3.8rem;">${p.emoji}</span>
+      </div>
+      <div class="product-body">
+        <div class="product-rating"><span class="star">★</span> ${p.rating} · <span style="margin-left:2px;">${p.cert}</span></div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-farmer">
+          <div class="product-farmer-dot">👤</div>
+          ${p.farmer} · ${p.loc}
+        </div>
+        <div class="product-footer">
+          <div class="product-price">₹${p.price} <span class="product-unit">/ ${p.unit}</span></div>
+          <button class="add-cart-btn" onclick="addToCart(event,${p.id})" title="Add to cart">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleWishlist(e, id) {
+  e.stopPropagation();
+  if (wishlist.has(id)) {
+    wishlist.delete(id);
+    showToast('💔 Removed from wishlist');
+  } else {
+    wishlist.add(id);
+    showToast('❤️ Added to wishlist!');
+  }
+  renderProducts(filteredProducts);
+}
+
+function addToCart(e, id) {
+  e.stopPropagation();
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  const existing = cart.find(x => x.id === id);
+  if (existing) {
+    existing.qty++;
+    showToast(`🛒 ${p.name} qty updated (${existing.qty})`);
+  } else {
+    cart.push({...p, qty: 1});
+    showToast(`✅ ${p.name} added to cart!`);
+  }
+  updateCartUI();
+  // Animate button
+  const btn = e.target;
+  btn.textContent = '✓';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => { btn.textContent = '+'; btn.style.background = 'var(--saffron)'; }, 1000);
+}
+
+function filterProducts() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  filteredProducts = products.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    p.farmer.toLowerCase().includes(q) ||
+    p.loc.toLowerCase().includes(q)
+  );
+  renderProducts(filteredProducts);
+}
+
+function filterByCategory(cat, btn) {
+  document.querySelectorAll('.market-body .btn').forEach(b => {
+    b.className = 'btn btn-secondary btn-sm';
+  });
+  btn.className = 'btn btn-primary btn-sm';
+  if (cat === 'all') { filteredProducts = [...products]; }
+  else if (cat === 'organic') { filteredProducts = products.filter(p => p.cert === 'Organic'); }
+  else { filteredProducts = products.filter(p => p.category === cat); }
+  renderProducts(filteredProducts);
+}
+
+function sortProducts(val) {
+  let sorted = [...filteredProducts];
+  if (val === 'price-asc') sorted.sort((a,b) => a.price - b.price);
+  else if (val === 'price-desc') sorted.sort((a,b) => b.price - a.price);
+  else if (val === 'rating') sorted.sort((a,b) => b.rating - a.rating);
+  renderProducts(sorted);
+}
+
+/* ══════════════════════════════════
+   CART
+══════════════════════════════════ */
+function updateCartUI() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  ['cart-count','cart-count-2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = count;
+  });
+  // Update summaries
+  const fmt = v => '₹' + v.toLocaleString('en-IN');
+  const grand = total + deliveryCost - discountAmount;
+  ['','2','3'].forEach(s => {
+    const sub = document.getElementById('sum-subtotal' + s);
+    const del = document.getElementById('sum-delivery' + s);
+    const tot = document.getElementById('sum-total' + s);
+    if (sub) sub.textContent = fmt(total);
+    if (del) del.textContent = deliveryCost === 0 ? 'FREE' : fmt(deliveryCost);
+    if (tot) tot.textContent = fmt(Math.max(0, grand));
+  });
+  renderCartItems();
+}
+
+function renderCartItems() {
+  const el = document.getElementById('cart-items-list');
+  if (!el) return;
+  if (cart.length === 0) {
+    el.innerHTML = `<div class="cart-empty">
+      <div class="icon">🛒</div>
+      <p>Your cart is empty.<br>Go explore fresh produce from Indian farmers!</p>
+      <button class="btn btn-primary" style="margin-top:16px;" onclick="showPage('page-customer')">Shop Now →</button>
+    </div>`;
+    return;
+  }
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-img ${item.bg}">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-farmer">👤 ${item.farmer} · ${item.loc}</div>
+        <div class="cart-item-price">₹${item.price} / ${item.unit}</div>
+      </div>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+        <div class="qty-num">${item.qty}</div>
+        <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+      </div>
+      <div style="font-weight:700;min-width:60px;text-align:right;">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
+      <button class="remove-btn" onclick="removeFromCart(${item.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  updateCartUI();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  updateCartUI();
+  showToast('🗑️ Item removed from cart');
+}
+
+function selectDelivery(el, cost) {
+  document.querySelectorAll('.delivery-opt').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  deliveryCost = cost;
+  updateCartUI();
+}
+
+function applyPromo() {
+  const code = document.getElementById('promo-input').value.toUpperCase();
+  if (code === 'KISAN10') {
+    discountAmount = Math.floor(cart.reduce((s,i) => s + i.price*i.qty, 0) * 0.1);
+    document.getElementById('discount-row').style.display = 'flex';
+    document.getElementById('sum-discount').textContent = '-₹' + discountAmount;
+    updateCartUI();
+    showToast('🎉 10% discount applied!');
+  } else if (code === 'FRESHFARM') {
+    discountAmount = 50;
+    document.getElementById('discount-row').style.display = 'flex';
+    document.getElementById('sum-discount').textContent = '-₹50';
+    updateCartUI();
+    showToast('🎉 ₹50 off applied!');
+  } else {
+    showToast('❌ Invalid promo code. Try KISAN10');
+  }
+}
+
+/* ══════════════════════════════════
+   CHECKOUT STEPS
+══════════════════════════════════ */
+function goToStep(step) {
+  if (step === 1 && cart.length === 0) {
+    showToast('⚠️ Your cart is empty!'); return;
+  }
+  [1,2,3].forEach(s => {
+    document.getElementById('checkout-step' + s).style.display = s === step ? 'block' : 'none';
+    const ind = document.getElementById('step' + s + '-ind');
+    if (s < step) { ind.className = 'step-ind done'; }
+    else if (s === step) { ind.className = 'step-ind active'; }
+    else { ind.className = 'step-ind'; }
+    if (s < 3) {
+      const line = document.getElementById('line' + s);
+      if (line) line.className = s < step ? 'step-line done' : 'step-line';
+    }
+  });
+  updateCartUI();
+}
+
+function placeOrder() {
+  if (cart.length === 0) { showToast('⚠️ Cart is empty!'); return; }
+  document.getElementById('success-modal').classList.add('show');
+  cart = [];
+  discountAmount = 0;
+  deliveryCost = 40;
+  updateCartUI();
+}
+
+function closeModal() {
+  document.getElementById('success-modal').classList.remove('show');
+}
+
+/* ══════════════════════════════════
+   TOAST
+══════════════════════════════════ */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  const m = document.getElementById('toast-msg');
+  m.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ══════════════════════════════════
+   UPLOAD ZONE DRAG
+══════════════════════════════════ */
+const uz = document.getElementById('upload-zone');
+if (uz) {
+  uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('drag'); });
+  uz.addEventListener('dragleave', () => uz.classList.remove('drag'));
+  uz.addEventListener('drop', e => { e.preventDefault(); uz.classList.remove('drag'); showToast('📸 ' + e.dataTransfer.files.length + ' photo(s) uploaded!'); });
+  uz.addEventListener('click', () => showToast('📸 File picker would open here in production!'));
+}
+
+/* init */
+updateCartUI();
+</script>
+</body>
+</html>
